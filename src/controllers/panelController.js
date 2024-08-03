@@ -61,10 +61,10 @@ exports.getPanelById = async (req, res) => {
 
 exports.updatePanel = async (req, res) => {
   try {
-    const fetch = await Panel.findById(req.params.id);
-
+    const { panel_id } = req.query;
+    const fetch = await Panel.findOne({panel_id});
     if (fetch) {
-      await Panel.updateOne({ _id: req.params.id }, { $set: req.body });
+      await Panel.updateOne({ panel_id: req.params.panel_id }, { $set: req.query });
       res.status(201).json({ status: 1, message: "Updated successfully" });
     } else {
       res.status(404).json({ status: 0, message: "Not found" });
@@ -77,9 +77,10 @@ exports.updatePanel = async (req, res) => {
 
 exports.deletePanel = async (req, res) => {
   try {
-    const fetch = await Panel.findById(req.params.id);
+    const { panel_id } = req.query;
+    const fetch = await Panel.findOne({panel_id});
     if (fetch) {
-      await Panel.deleteOne({ _id: req.params.id });
+      await Panel.deleteOne({ panel_id: req.query.panel_id });
       res.status(201).json({ status: 1, message: "Deleted successfully" });
     } else {
       res.status(404).json({ status: 0 ,message: "Not found" });
