@@ -14,16 +14,31 @@ exports.getAllPanels = async (req, res) => {
 
 // Create panel
 exports.createPanel = async (req, res) => {
-  const panel = new Panel({
-    panel_id: req.body.panel_id,
-    zone_name: req.body.zone_name,
-    alarm_mode: req.body.alarm_mode,
-    fire_alarm: req.body.fire_alarm,
-    dvr_nvr_status: req.body.dvr_nvr_status,
-    camera_status: req.body.camera_status,
-    hdd_status: req.body.hdd_status,
-  });
-
+  const { panel_id } = req.query;
+  // find by panel id 
+  const fetch = await Panel.findOne({ panel_id });
+  if (fetch) {
+    return res.status(400).json({ status: 0, message: 'Panel already exists', data: null });
+  }
+  else{
+    var panel = new Panel({
+      panel_id: req.query.panel_id,
+      z1: req.query.z1,
+      z2: req.query.z2,
+      z3: req.query.z3,
+      z4: req.query.z4,
+      z5: req.query.z5,
+      z6: req.query.z6,
+      z7: req.query.z7,
+      z8: req.query.z8,
+      z9: req.query.z9,
+      z10: req.query.z10,
+      z11: req.query.z11,
+      z12: req.query.z12,
+      z13: req.query.z13,
+      z14: req.query.z14
+    });
+  }
   try {
     const newPanel = await panel.save();
     res.status(201).json({ status: 1, message: 'Data added successfully' });
@@ -35,7 +50,8 @@ exports.createPanel = async (req, res) => {
 
 exports.getPanelById = async (req, res) => {
   try {
-    const panel = await Panel.findById(req.params.id);
+    const { panel_id } = req.params;
+    const panel = await Panel.findOne({panel_id});
     res.json({ status: 1, message: 'Data fetched successfully', data: panel });
   } catch (error) {
     console.log(error.message);
