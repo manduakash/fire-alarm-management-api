@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 9828;
 require('dotenv').config();
-
+const dns = require('dns');
 // Middleware to parse JSON bodies
 app.use(express.json());
 
@@ -11,6 +11,15 @@ app.use(express.json());
 const apiRoutes = require('./src/routes/api');
 const panelRoutes = require('./src/routes/panelRoutes');
 
+app.get('/dns-test', (req, res) => {
+  dns.resolveSrv('_mongodb._tcp.cluster0.mongodb.net', (err, addresses) => {
+    if (err) {
+      res.status(500).send(`DNS resolution error: ${err.message}`);
+    } else {
+      res.send(`DNS resolution successful: ${JSON.stringify(addresses)}`);
+    }
+  });
+});
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
   }).then(() => {
