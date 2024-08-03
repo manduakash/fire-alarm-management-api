@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const port = 9828;
+require('dotenv').config();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
