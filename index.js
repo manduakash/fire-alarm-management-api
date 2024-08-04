@@ -5,18 +5,17 @@ const port = 9828;
 require('dotenv').config();
 const dns = require('dns');
 const jwt = require('jsonwebtoken');
-const User = require("../src/models/userModel");
-const serverless = require('serverless-http');
+const User = require("./src/models/userModel");
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 // Import routes
-const authRoutes = require('../src/routes/authRoutes');
-const userRoutes = require('../src/routes/userRoutes');
-const panelRoutes = require('../src/routes/panelRoutes');
+const authRoutes = require('./src/routes/authRoutes');
+const userRoutes = require('./src/routes/userRoutes');
+const panelRoutes = require('./src/routes/panelRoutes');
 
-app.get('/.netlify/functions/dns-test', (req, res) => {
+app.get('/dns-test', (req, res) => {
   dns.resolveSrv('_mongodb._tcp.cluster0.mongodb.net', (err, addresses) => {
     if (err) {
       res.status(500).send(`DNS resolution error: ${err.message}`);
@@ -53,12 +52,12 @@ const auth = async (req, res, next) => {
 };
 
 // Use routes
-app.use('/.netlify/functions/api/auth', authRoutes);
-app.use('/.netlify/functions/api/panel', panelRoutes);
-app.use('/.netlify/functions/api/user', auth, userRoutes);
+app.use('api/auth', authRoutes);
+app.use('api/panel', panelRoutes);
+app.use('api/user', auth, userRoutes);
 
 // Define a route
-app.get('/.netlify/functions/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Fire Alarm Management System is Online...!');
 });
 
@@ -66,9 +65,3 @@ app.get('/.netlify/functions/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from the server!' });
-});
-
-module.exports.handler = serverless(app);
