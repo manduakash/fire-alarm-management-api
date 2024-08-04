@@ -15,7 +15,7 @@ const authRoutes = require('./src/routes/authRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const panelRoutes = require('./src/routes/panelRoutes');
 
-app.get('/dns-test', (req, res) => {
+app.get('/.netlify/functions/dns-test', (req, res) => {
   dns.resolveSrv('_mongodb._tcp.cluster0.mongodb.net', (err, addresses) => {
     if (err) {
       res.status(500).send(`DNS resolution error: ${err.message}`);
@@ -52,12 +52,12 @@ const auth = async (req, res, next) => {
 };
 
 // Use routes
-app.use('/api/auth', authRoutes);
-app.use('/api/panel', panelRoutes);
-app.use('/api/user', auth, userRoutes);
+app.use('/.netlify/functions/api/auth', authRoutes);
+app.use('/.netlify/functions/api/panel', panelRoutes);
+app.use('/.netlify/functions/api/user', auth, userRoutes);
 
 // Define a route
-app.get('/', (req, res) => {
+app.get('/.netlify/functions/', (req, res) => {
   res.send('Fire Alarm Management System is Online...!');
 });
 
