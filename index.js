@@ -52,9 +52,9 @@ const auth = async (req, res, next) => {
 };
 
 // Use routes
-app.use('api/auth', authRoutes);
-app.use('api/panel', panelRoutes);
-app.use('api/user', auth, userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/panel', panelRoutes);
+app.use('/api/user', auth, userRoutes);
 
 // Define a route
 app.get('/', (req, res) => {
