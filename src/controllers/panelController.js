@@ -50,7 +50,7 @@ exports.createPanel = async (req, res) => {
 
 exports.getPanelById = async (req, res) => {
   try {
-    const { panel_id } = req.params;
+    const { panel_id } = req.query;
     const panel = await Panel.findOne({panel_id});
     res.json({ status: 1, message: 'Data fetched successfully', data: panel });
   } catch (error) {
@@ -64,7 +64,7 @@ exports.updatePanel = async (req, res) => {
     const { panel_id } = req.query;
     const fetch = await Panel.findOne({panel_id});
     if (fetch) {
-      await Panel.updateOne({ panel_id: req.params.panel_id }, { $set: req.query });
+      await Panel.updateOne({ panel_id: req.query.panel_id }, { $set: req.query });
       res.status(201).json({ status: 1, message: "Updated successfully" });
     } else {
       res.status(404).json({ status: 0, message: "Not found" });
