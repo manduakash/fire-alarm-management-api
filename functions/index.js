@@ -6,6 +6,7 @@ require('dotenv').config();
 const dns = require('dns');
 const jwt = require('jsonwebtoken');
 const User = require("../src/models/userModel");
+const serverless = require('serverless-http');
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -65,3 +66,9 @@ app.get('/.netlify/functions/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+app.get('/api', (req, res) => {
+  res.json({ message: 'Hello from the server!' });
+});
+
+module.exports.handler = serverless(app);
