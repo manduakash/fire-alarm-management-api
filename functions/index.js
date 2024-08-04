@@ -5,15 +5,15 @@ const port = 9828;
 require('dotenv').config();
 const dns = require('dns');
 const jwt = require('jsonwebtoken');
-const User = require("./src/models/userModel");
+const User = require("../src/models/userModel");
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 // Import routes
-const authRoutes = require('./src/routes/authRoutes');
-const userRoutes = require('./src/routes/userRoutes');
-const panelRoutes = require('./src/routes/panelRoutes');
+const authRoutes = require('../src/routes/authRoutes');
+const userRoutes = require('../src/routes/userRoutes');
+const panelRoutes = require('../src/routes/panelRoutes');
 
 app.get('/.netlify/functions/dns-test', (req, res) => {
   dns.resolveSrv('_mongodb._tcp.cluster0.mongodb.net', (err, addresses) => {
