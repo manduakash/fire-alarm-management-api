@@ -62,10 +62,11 @@ exports.getPanelById = async (req, res) => {
 
 exports.updatePanel = async (req, res) => {
   try {
-    const { pid } = req.query;
+    const { pid } = req.body;
+    console.log('body:', req.body)
     const fetch = await Panel.findOne({pid});
     if (fetch) {
-      await Panel.updateOne({ pid: req.query.pid }, { $set: req.query });
+      await Panel.updateOne({ pid: req.body.pid }, { $set: req.body });
       res.status(201).json({ status: 1, message: "Updated successfully" });
     } else {
       res.status(404).json({ status: 0, message: "Not found" });

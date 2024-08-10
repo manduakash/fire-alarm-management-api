@@ -8,7 +8,7 @@ const panelController = require('../controllers/panelController');
 router.get('/get-all-panels', panelController.getAllPanels);
 router.get('/save-panel', panelController.createPanel);
 router.get('/get-panel', panelController.getPanelById);
-router.get('/update-panel', panelController.updatePanel);
+router.post('/update-panel', panelController.updatePanel);
 router.get('/delete-panel', panelController.deletePanel);
 
 module.exports = router;
