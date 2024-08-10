@@ -14,29 +14,30 @@ exports.getAllPanels = async (req, res) => {
 
 // Create panel
 exports.createPanel = async (req, res) => {
-  const { panel_id } = req.query;
+  const { pid } = req.query;
   // find by panel id 
-  const fetch = await Panel.findOne({ panel_id });
+  const fetch = await Panel.findOne({ pid });
   if (fetch) {
     return res.status(400).json({ status: 0, message: 'Panel already exists', data: null });
   }
   else{
     var panel = new Panel({
-      panel_id: req.query.panel_id,
-      z1: req.query.z1,
-      z2: req.query.z2,
-      z3: req.query.z3,
-      z4: req.query.z4,
-      z5: req.query.z5,
-      z6: req.query.z6,
-      z7: req.query.z7,
-      z8: req.query.z8,
-      z9: req.query.z9,
-      z10: req.query.z10,
-      z11: req.query.z11,
-      z12: req.query.z12,
-      z13: req.query.z13,
-      z14: req.query.z14
+      pid: req.query.pid,
+      b0: req.query.b0,
+      b1: req.query.b1,
+      b2: req.query.b2,
+      b3: req.query.b3,
+      b4: req.query.b4,
+      b5: req.query.b5,
+      b6: req.query.b6,
+      b7: req.query.b7,
+      b8: req.query.b8,
+      b9: req.query.b9,
+      b10: req.query.b10,
+      b11: req.query.b11,
+      b12: req.query.b12,
+      b13: req.query.b13,
+      b14: req.query.b14
     });
   }
   try {
@@ -50,8 +51,8 @@ exports.createPanel = async (req, res) => {
 
 exports.getPanelById = async (req, res) => {
   try {
-    const { panel_id } = req.query;
-    const panel = await Panel.findOne({panel_id});
+    const { pid } = req.query;
+    const panel = await Panel.findOne({pid});
     res.json({ status: 1, message: 'Data fetched successfully', data: panel });
   } catch (error) {
     console.log(error.message);
@@ -61,10 +62,10 @@ exports.getPanelById = async (req, res) => {
 
 exports.updatePanel = async (req, res) => {
   try {
-    const { panel_id } = req.query;
-    const fetch = await Panel.findOne({panel_id});
+    const { pid } = req.query;
+    const fetch = await Panel.findOne({pid});
     if (fetch) {
-      await Panel.updateOne({ panel_id: req.query.panel_id }, { $set: req.query });
+      await Panel.updateOne({ pid: req.query.pid }, { $set: req.query });
       res.status(201).json({ status: 1, message: "Updated successfully" });
     } else {
       res.status(404).json({ status: 0, message: "Not found" });
@@ -77,10 +78,10 @@ exports.updatePanel = async (req, res) => {
 
 exports.deletePanel = async (req, res) => {
   try {
-    const { panel_id } = req.query;
-    const fetch = await Panel.findOne({panel_id});
+    const { pid } = req.query;
+    const fetch = await Panel.findOne({pid});
     if (fetch) {
-      await Panel.deleteOne({ panel_id: req.query.panel_id });
+      await Panel.deleteOne({ pid: req.query.pid });
       res.status(201).json({ status: 1, message: "Deleted successfully" });
     } else {
       res.status(404).json({ status: 0 ,message: "Not found" });

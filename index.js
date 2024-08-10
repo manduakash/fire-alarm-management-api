@@ -6,6 +6,11 @@ require('dotenv').config();
 const dns = require('dns');
 const jwt = require('jsonwebtoken');
 const User = require("./src/models/userModel");
+const cors = require('cors');
+
+
+// Middleware to use @client side 
+app.use(cors());
 
 // Middleware to parse JSON bodies
 app.use(express.json());
