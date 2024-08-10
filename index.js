@@ -15,6 +15,9 @@ app.use(cors());
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// Middleware to parse x-www-form-urlencoded data
+app.use(express.urlencoded({ extended: true }));
+
 // Import routes
 const authRoutes = require('./src/routes/authRoutes');
 const userRoutes = require('./src/routes/userRoutes');
